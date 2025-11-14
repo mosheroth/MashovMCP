@@ -1,0 +1,42 @@
+[project]
+name = "mashov-mcp-server"
+version = "0.1.0"
+description = "MCP Server for Mashov API - School management system integration"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "Amit Marcus" }
+]
+keywords = ["mcp", "mashov", "school", "api", "education"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "mcp>=1.0.0",
+    "aiohttp>=3.9.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/AmitMarcus/MashovMCP"
+Repository = "https://github.com/AmitMarcus/MashovMCP"
+Issues = "https://github.com/AmitMarcus/MashovMCP/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = []
+

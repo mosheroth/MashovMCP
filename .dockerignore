@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# uv
+.uv/
+uv.lock
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (not needed in container)
+*.md
+docs/
+
+# Tests (not needed in container)
+test_*.py
+tests/
+
+# Environment files (use docker env instead)
+.env
+.env.*
+
+# Misc
+*.log
+.DS_Store
+mcp-config.json
+
