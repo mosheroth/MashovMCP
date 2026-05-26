@@ -7,8 +7,8 @@ from typing import Optional
 from dotenv import load_dotenv
 from mashov_client import MashovClient
 
-# Load environment variables
-load_dotenv()
+# Load .env from this file's directory regardless of CWD
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
 
 
 def load_config() -> Optional[MashovClient]:
