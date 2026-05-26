@@ -21,9 +21,21 @@ MASHOV_YEAR=2025
 
 ## Usage
 
-In Claude Code: `/mashov get my homework`
+### Claude Code (skill)
 
-Or run directly:
+Invoke the skill, then ask naturally:
+
+```
+/mashov what homework do I have?
+/mashov show me my grades in math
+/mashov what's my timetable this week?
+/mashov list my children
+```
+
+Claude reads `SKILL.md`, runs `runner.py` via Bash with the right operation and kwargs, parses the JSON response, and presents the data in plain language.
+
+### Direct CLI
+
 ```bash
 .venv/Scripts/python.exe runner.py <operation>
 ```
