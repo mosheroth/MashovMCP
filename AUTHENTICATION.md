@@ -148,59 +148,25 @@ All student endpoints follow the pattern: `/api/students/{studentGuid}/{resource
 
 ## Implementation Notes
 
-### Current Python Implementation (`mashov_client.py`)
+### `mashov_client.py`
 
-The implementation includes:
-
-1. **Single-step authentication**:
-   - Direct POST to `/api/login` with credentials
-   - No initialization step needed (empty POST returns 404)
-
-2. **Automatic CSRF token extraction**:
-   - Extracted from login response headers
-   - Automatically included in all subsequent requests
-
-3. **Parent account support**:
-   - Detects and stores list of children
-   - Uses first child's GUID by default
-   - Supports accessing data for specific children
-
-4. **Student GUID extraction**:
-   - Automatic extraction from login response
-   - Searches multiple possible field names
-   - Validates GUID format (UUID with dashes)
-
-5. **Session persistence**:
-   - Uses `aiohttp.ClientSession` singleton
-   - Maintains cookies across requests
-   - Automatic re-authentication on 401
-
-6. **Comprehensive error handling**:
-   - Multiple success indicators checked
-   - Detailed debug logging
-   - Informative error messages
+- Single-step auth: POST to `/api/login`, no init step needed
+- CSRF token extracted from response header, sent on all subsequent requests
+- Parent accounts: detects children list, uses first child by default
+- Student GUID: auto-extracted from login response, multiple field names tried
+- Session: `aiohttp.ClientSession` singleton, cookies maintained, auto re-auth on 401
 
 ### Usage Example
 
 ```python
 from mashov_client import MashovClient
+from config import load_config
 
-# Get singleton instance
+load_config()  # reads from .env
 client = MashovClient.get_instance()
-
-# Configure credentials
-client.configure(
-    username="your_username",
-    password="your_password",
-    semel="school_id",
-    year="2025"
-)
-
-# Login (happens automatically on first request)
 await client.login()
 
-# Make API requests
 homework = await client.get_homework()
-grades = await client.get_grades()
+grades = await client.get_all_grades()
 ```
 
