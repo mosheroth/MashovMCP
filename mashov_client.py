@@ -355,18 +355,19 @@ class MashovClient:
     @asynccontextmanager
     async def _with_child_context(self, child_guid: Optional[str] = None, child_name: Optional[str] = None):
         """Context manager for temporarily switching to a different child
-        
+
         Args:
             child_guid: Optional child GUID to switch to
             child_name: Optional child name to switch to
-            
+
         Yields:
             None
-            
+
         Example:
             async with client._with_child_context(child_name="John"):
                 homework = await client._request("students/homework")
         """
+        await self._ensure_authenticated()
         guid_to_use = self._resolve_child_guid(child_guid, child_name)
         original_guid = self.student_guid
         self.student_guid = guid_to_use

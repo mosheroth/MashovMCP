@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
 Mashov API CLI runner for Claude Code skill.
-Usage: uv run python runner.py <operation> [json_kwargs]
+Usage: runner.py <operation> [--child_name NAME] [--child_guid GUID] [--subject SUBJECT]
 
 Operations: grades, homework, timetable, behave, groups,
             files, alfon, maakav, lessons, schools, children
 """
 
+import argparse
 import asyncio
 import json
 import os
@@ -40,13 +41,26 @@ OPERATIONS = {
 
 
 async def main():
-    if len(sys.argv) < 2 or sys.argv[1] == "help":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("operation", nargs="?", default="help")
+    parser.add_argument("--child_name")
+    parser.add_argument("--child_guid")
+    parser.add_argument("--subject")
+    args = parser.parse_args()
+
+    op = args.operation
+    if op == "help":
         print("Operations: " + ", ".join(list(OPERATIONS.keys()) + ["children"]))
-        print("Optional 2nd arg: JSON kwargs, e.g. '{\"child_name\": \"ישראל\"}'")
+        print("Flags: --child_name NAME  --child_guid GUID  --subject SUBJECT")
         return
 
-    op = sys.argv[1]
-    kwargs = json.loads(sys.argv[2]) if len(sys.argv) > 2 else {}
+    kwargs = {}
+    if args.child_name:
+        kwargs["child_name"] = args.child_name
+    if args.child_guid:
+        kwargs["child_guid"] = args.child_guid
+    if args.subject:
+        kwargs["subject"] = args.subject
 
     configured = load_config()
     if not configured:
