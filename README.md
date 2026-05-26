@@ -1,4 +1,4 @@
-# MashovMCP
+# Mashov Skill
 
 Claude Code skill for the [Mashov](https://web.mashov.info) school management system.
 
