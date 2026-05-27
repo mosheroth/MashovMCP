@@ -46,12 +46,13 @@ async def main():
     parser.add_argument("--child_name")
     parser.add_argument("--child_guid")
     parser.add_argument("--subject")
+    parser.add_argument("--days", type=int, help="Filter by last N days (homework only)")
     args = parser.parse_args()
 
     op = args.operation
     if op == "help":
         print("Operations: " + ", ".join(list(OPERATIONS.keys()) + ["children"]))
-        print("Flags: --child_name NAME  --child_guid GUID  --subject SUBJECT")
+        print("Flags: --child_name NAME  --child_guid GUID  --subject SUBJECT  --days N")
         return
 
     kwargs = {}
@@ -61,6 +62,8 @@ async def main():
         kwargs["child_guid"] = args.child_guid
     if args.subject:
         kwargs["subject"] = args.subject
+    if args.days:
+        kwargs["days"] = args.days
 
     configured = load_config()
     if not configured:

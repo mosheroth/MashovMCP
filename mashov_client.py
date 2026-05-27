@@ -8,6 +8,7 @@ import aiohttp
 import json
 import logging
 from contextlib import asynccontextmanager
+from datetime import datetime, timedelta
 from typing import Optional, Dict, Any, List, Union
 from urllib.parse import urljoin
 
@@ -518,18 +519,28 @@ class MashovClient:
         """Get list of all schools"""
         return await self._request("schools")
     
-    async def get_homework(self, child_guid: Optional[str] = None, child_name: Optional[str] = None) -> List[Dict[str, Any]]:
+    async def get_homework(self, child_guid: Optional[str] = None, child_name: Optional[str] = None, days: Optional[int] = None) -> List[Dict[str, Any]]:
         """Get homework assignments for the student
-        
+
         Args:
             child_guid: Optional child GUID to query. If not provided, uses current active child.
             child_name: Optional child name to query. If not provided, uses current active child.
-        
+            days: Optional filter to only return homework from last N days
+
         Returns:
             List of homework items with: lessonId, lessonDate, lesson, homework, groupId, remark, studentGuid, subjectName
         """
         async with self._with_child_context(child_guid, child_name):
-            return await self._request("students/homework")
+            result = await self._request("students/homework")
+
+            if days is not None and days > 0:
+                cutoff = datetime.now() - timedelta(days=days)
+                result = [
+                    h for h in result
+                    if datetime.fromisoformat(h["lessonDate"].replace("Z", "+00:00")) >= cutoff
+                ]
+
+            return result
     
     async def get_alfon(self, child_guid: Optional[str] = None, child_name: Optional[str] = None) -> List[Dict[str, Any]]:
         """Get the class directory (alfon) with classmates' contact information
