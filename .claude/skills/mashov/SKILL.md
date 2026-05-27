@@ -87,3 +87,27 @@ All operations support:
 6. If Hebrew text appears, display as-is (do not transliterate)
 7. If credentials missing, instruct user to fill in `.env`
 8. If user asks what children available, run `children` operation first
+
+the output of this skill is:
+
+look for the children homework from the last 4 days. and print them out in the following format:
+
+**Format:**
+```
+📝 סיכום שעורי בית - [תאריך]
+
+🔴 למחר ([תאריך]):
+
+**זיו (כיתה ד'):**
+- [מקצוע]: [תיאור] (ניתן ב-[תאריך])
+
+**עידו (כיתה א'):**  
+- [מקצוע]: [תיאור] (ניתן ב-[תאריך])
+
+🟡 למחרתיים ([תאריך]):
+[...]
+```
+
+prioritise and bold what is due for tomorrow.
+dont' write notes in the response or thoughts. 
+be very percise and to the point.
